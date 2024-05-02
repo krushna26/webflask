@@ -1,7 +1,11 @@
 # importing python libraries
-from flask import Flask, jsonify, request, redirect, url_for
+from flask import Flask, jsonify, request, redirect, url_for,session
 
 app=Flask(__name__)
+
+
+app.config['DEBUG']=True
+app.config["SECRET_KEY"]='Arrey@123#'
 
 # -----------------------****____________________
 
@@ -11,6 +15,10 @@ app=Flask(__name__)
 
 @app.route("/")
 def fun():
+    #Id we want to remove the value Stored in the session can be automatically removed from the session when it
+    # Goes into the fun page in this case but you can consider the any function name in that case you can write the
+    # Below lines of code Which will be helpful for Removing the session variable from sesssion.
+    session.pop('name',None)
     return "Krushna pawar"
 
 # -----------------------****____________________
@@ -19,6 +27,9 @@ def fun():
 @app.route("/home",methods=['GET','POST'],defaults={'name':'ABCD','location':'pune'})
 @app.route("/home/<name>/<location>",methods=['GET','POST'])
 def home(name,location):
+
+    #Syntax for the adding the values in the Session
+    session['name']=name
 
     return "<h1>Hii {} You are in {}<h1>".format(name,location)
 
@@ -31,9 +42,15 @@ def home(name,location):
 
 @app.route("/query")
 def queryfun():
-    name=request.args.get('name')
+
+    #Syntax for the fetching values which are stored in the Session
+    if 'name' in session:
+        name=session['name']
+    else:
+        name="Krushna"
     location=request.args.get('location')
     return '<h3> hii {} welcome to {}<h3>'.format(name,location)
+
 
 
 # -----------------------****____________________
@@ -105,8 +122,4 @@ def formdata():
         return redirect(url_for('home',name=name,location=location))
 
 
-
-
-
-
-app.run(debug=True)
+app.run()
