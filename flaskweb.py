@@ -1,8 +1,8 @@
 # importing python libraries
 from flask import Flask,jsonify,request
 app=Flask(__name__)
-# -----------------------****____________________
 
+# -----------------------****____________________
 
 #How to do routing on home page here we dont need ot specify the any name or string for the routing
 # It will automatically route on that page when you started app.
@@ -69,7 +69,9 @@ def process():
     location=request.form['location']
     return '<h1> hii {} Welcome to {}</h1>'.format(name,location)
 
-
+@app.route("/Json")
+def fun2():
+    return "We are on the Json Page"
 app.run(debug=True)
 
 
