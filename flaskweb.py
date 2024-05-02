@@ -69,7 +69,7 @@ def process():
     location=request.form['location']
     return '<h1> hii {} Welcome to {}</h1>'.format(name,location)
 
-@app.route("/Json")
+@app.route("/fly")
 def fun2():
     return "We are on the Json Page"
 app.run(debug=True)
