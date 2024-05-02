@@ -1,5 +1,6 @@
 # importing python libraries
-from flask import Flask,jsonify,request
+from flask import Flask, jsonify, request, redirect, url_for
+
 app=Flask(__name__)
 
 # -----------------------****____________________
@@ -15,11 +16,11 @@ def fun():
 # -----------------------****____________________
 
 #How to pass the variable with route function and how to set the default value to it
-# @app.route("/home",methods=['GET','POST'],defaults={'name':'ABCD'})
-# @app.route("/home/<name>",methods=['GET','POST'])
-# def home(name):
-#
-#     return "<h1>Hii {} You are on Home<h1>".format(name)
+@app.route("/home",methods=['GET','POST'],defaults={'name':'ABCD','location':'pune'})
+@app.route("/home/<name>/<location>",methods=['GET','POST'])
+def home(name,location):
+
+    return "<h1>Hii {} You are in {}<h1>".format(name,location)
 
 # -----------------------****____________________
 
@@ -28,11 +29,11 @@ def fun():
 #you need to import the request function in python before running the query.
 
 
-# @app.route("/query")
-# def queryfun():
-#     name=request.args.get('name')
-#     location=request.args.get('location')
-#     return '<h3> hii {} welcome to {}<h3>'.format(name,location)
+@app.route("/query")
+def queryfun():
+    name=request.args.get('name')
+    location=request.args.get('location')
+    return '<h3> hii {} welcome to {}<h3>'.format(name,location)
 
 
 # -----------------------****____________________
@@ -80,6 +81,28 @@ def fun2():
     return jsonify({'result':'sucess','name':name,'location':location,'randomlis':randomlis})
 
 
+#combining the get and post request under the Single route function in Flask
+
+@app.route("/formdata",methods=["GET","POST"])
+def formdata():
+    # Here in this case we have added the one form which will send data to the same action and method is post
+    # As we know default method is GET So that will be called automatically and process the form data as it have form method as POST
+
+    if request.method=="GET":
+        return '''
+            <form action="/formdata" method='POST'>
+            <input type=Text name=name>
+            <input type=Text name=location>
+            <input type=submit value=submit>
+            '''
+    else:
+        name=request.form['name']
+        location=request.form['location']
+        # return '<h1> Hii {} you are on {} stay Happy</h1>'.format(name,location)
+
+
+        ##If We want to redict data processed into another URL Then This can be possible using redirect(url_for(nameof the function and the parameter you need to pass))
+        return redirect(url_for('home',name=name,location=location))
 
 
 
@@ -87,8 +110,3 @@ def fun2():
 
 
 app.run(debug=True)
-
-
-
-
-
