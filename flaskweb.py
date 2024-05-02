@@ -69,10 +69,25 @@ def process():
     location=request.form['location']
     return '<h1> hii {} Welcome to {}</h1>'.format(name,location)
 
-@app.route("/fly")
+
+# Ccode for the fetchong data from the JSON
+@app.route("/processjson")
 def fun2():
-    return "We are on the Json Page"
+    data=request.get_json()
+    name=data['name']
+    location=data['location']
+    randomlis=data['randomlis']
+    return jsonify({'result':'sucess','name':name,'location':location,'randomlis':randomlis})
+
+
+
+
+
+
+
+
 app.run(debug=True)
+
 
 
 
