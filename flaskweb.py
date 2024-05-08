@@ -1,5 +1,5 @@
 # importing python libraries
-from flask import Flask, jsonify, request, redirect, url_for,session
+from flask import Flask, jsonify, request, redirect, url_for,session,render_template
 
 app=Flask(__name__)
 
@@ -85,7 +85,7 @@ def form():
 def process():
     name=request.form['name']
     location=request.form['location']
-    return '<h1> hii {} Welcome to {}</h1>'.format(name,location)
+    return render_template('home.html',name=name,location=location,abcs=False)
 
 
 # Ccode for the fetchong data from the JSON
@@ -119,7 +119,19 @@ def formdata():
 
 
         ##If We want to redict data processed into another URL Then This can be possible using redirect(url_for(nameof the function and the parameter you need to pass))
+        #We can pass the varibles which can be used for the checking of the conditionals statement We can use this inside the
+        #In the HTM CODE We can add the conditionals as well as Looping Statement inside it
+
         return redirect(url_for('home',name=name,location=location))
+
+
+
+#Render Templates in flask allows us to add the HTML Files into python Files
+@app.route("/htmlfile",methods=['GET','POST'])
+def htmlcode():
+    return render_template('index.html')
+
+
 
 
 app.run()

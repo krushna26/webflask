@@ -1,0 +1,26 @@
+{% extends 'firsr.html' %}
+{% block title %} Home page {% endblock %}
+
+{% block content %}
+
+<body>
+{% if abcs %}
+
+<h1> hii {{name}} Welcome to {{location}}</h1>
+{% else %}
+<h1> You Have Entered Wrong Entries</h1>
+{% endif %}
+
+
+
+{% for i in list %}
+<h3>{{i}}</h3>
+{% endfor %}
+
+<img src="{{url_for('static',filename='image.png')}}">
+
+<!--for the Adding External File inside the HTML Code This can be achieved by using Url_for Function in python -->
+<!--Inside the Image tag yu need to add the url_for method which Contains two parameters such as static and another one is the filename ='name of that file or you can add there the location of that file"-->
+</body>
+</html>
+{% endblock %}
